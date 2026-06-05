@@ -11482,14 +11482,14 @@ function CopyBar({ url, onSave, saved, proCaption }) {
           <span className="copy-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4.5 4.5L19 7" /></svg></span>
         </button>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 7, color: 'var(--text-3)', fontSize: 12.5 }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
-          In your page, type <span className="mono" style={{ color: 'var(--text-2)' }}>/embed</span> and paste
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, color: 'var(--text-3)', fontSize: 12.5, whiteSpace: 'nowrap' }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 16v-4M12 8h.01" /></svg>
+          Type <span className="mono" style={{ color: 'var(--text-2)' }}>/embed</span> &amp; paste in Notion
         </div>
-        <button className="btn btn-ghost btn-sm" onClick={onSave} style={saved ? { color: 'var(--pro)', borderColor: 'var(--pro-border)' } : {}}>
+        <button className="btn btn-ghost btn-sm" onClick={onSave} style={saved ? { color: 'var(--accent)', borderColor: 'var(--accent)' } : {}}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20.3C12 20.3 3.8 14.7 3.8 9.2A4.4 4.4 0 0 1 12 6.8A4.4 4.4 0 0 1 20.2 9.2C20.2 14.7 12 20.3 12 20.3Z" /></svg>
-          {saved ? 'Saved' : 'Save to favorites'}
+          {saved ? 'Saved' : 'Save'}
         </button>
       </div>
     </div>
@@ -13734,7 +13734,7 @@ function App() {
         <div className="nav-spacer" />
 
         <button className="btn btn-icon btn-subtle" onClick={() => go('favorites')} title="Favorites" style={{ position: 'relative' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill={favorites.length ? 'var(--pro)' : 'none'} stroke={favorites.length ? 'var(--pro)' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20.3C12 20.3 3.8 14.7 3.8 9.2A4.4 4.4 0 0 1 12 6.8A4.4 4.4 0 0 1 20.2 9.2C20.2 14.7 12 20.3 12 20.3Z" /></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill={favorites.length ? 'var(--accent)' : 'none'} stroke={favorites.length ? 'var(--accent)' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20.3C12 20.3 3.8 14.7 3.8 9.2A4.4 4.4 0 0 1 12 6.8A4.4 4.4 0 0 1 20.2 9.2C20.2 14.7 12 20.3 12 20.3Z" /></svg>
           {favorites.length > 0 && <span style={{ position: 'absolute', top: -3, right: -3, minWidth: 16, height: 16, padding: '0 4px', borderRadius: 99, background: 'var(--ink)', color: 'var(--on-ink)', fontSize: 10, fontWeight: 700, display: 'grid', placeItems: 'center' }}>{favorites.length}</span>}
         </button>
 
