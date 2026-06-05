@@ -3,8 +3,6 @@ import json
 
 app = Flask(__name__, template_folder='templates') 
 
-
-
 def read_json_file(path):
     with open(path, "r") as json_file:
         return json.load(json_file)
@@ -18,6 +16,7 @@ def home():
     return render_template('base.html', icons_data=dummy_icons_data, widgets_data=dummy_widgets_data)
 
 if __name__ == '__main__': 
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
 
+# ok

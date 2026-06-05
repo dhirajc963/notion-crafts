@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+import App from '../components/NotionCrafts.jsx';
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notion Crafts — Customizable widgets &amp; icons for Notion</title>
+    <meta
+      name="description"
+      content="A best-in-class library of customizable widgets and icons for Notion. Tune them live, copy one link, paste it in. No account, no backend."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Prevent a flash of the wrong theme before the React island hydrates -->
+    <script is:inline>
+      try {
+        const t = JSON.parse(localStorage.getItem('nc-theme'));
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <App client:only="react" />
+    </div>
+  </body>
+</html>

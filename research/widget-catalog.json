@@ -1,0 +1,1388 @@
+{
+  "summary": "Competitor landscape (Indify, Apption, WidgetBox, Widgetly, Blocs, Widgetsmith, Notion Marketplace): nearly everyone clusters around the same 8-10 staples \u2014 clock, countdown, weather, quote, counter, life/year progress, habit, calendar, plus a Spotify/Google-Calendar embed. Indify covers ~10 guided widgets, Apption leans on third-party iframes (TradingView, CoinGecko, Albumizr), Blocs is the strongest on pure client-side productivity (pomodoro, water, habit), and Widgetsmith/iOS galleries push aesthetics. The big weaknesses: (1) shallow customization and dated visuals \u2014 most are utilitarian, not design-forward; (2) almost no Finance widgets beyond a crypto/stock iframe (no savings ring, budget, debt, subscriptions, net worth, expense splitter); (3) Health is fragmented across paid templates rather than embeddable widgets (water, sleep, calorie, BMI, fasting, breathing); (4) Dev/Creator is barely served beyond a GitHub heatmap and a subscriber counter; (5) Fun/Aesthetic ambient widgets (lava lamp, gradient mesh, starfield, dice, 8-ball) are essentially absent from the Notion-specific market. Where we win: a single cohesive design system with one shared {config, accent, s, theme} renderer means we can ship 50+ visually consistent, themeable widgets \u2014 and crucially we can own the pure-client-side long tail (math/Date/localStorage/SVG) that needs no backend, gating only the genuinely live-data ones (weather, tickers, GitHub, subscriber counts, calendar feeds) behind Pro. Priority 1 = high-value, pure-client, ship-first (progress bars, day counters, savings/budget rings, water, mood, breathing, dice, greeting). Priority 3 = anything needing an external API or heavy canvas work.",
+  "rawCount": 128,
+  "catalog": [
+    {
+      "type": "analogClock",
+      "name": "Analog Clock",
+      "category": "Time",
+      "desc": "A sweeping analog face with your timezone, a choice of dials and a single accent.",
+      "config": {
+        "tz": "America/New_York",
+        "dial": "minimal",
+        "seconds": true,
+        "showNumbers": true
+      },
+      "configStr": "{ tz: 'America/New_York', dial: 'minimal', seconds: true, showNumbers: true }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "flipClock",
+      "name": "Flip Clock",
+      "category": "Time",
+      "desc": "A retro split-flap clock that flutters as every minute turns over.",
+      "config": {
+        "tz": "local",
+        "format": "24",
+        "seconds": false,
+        "showDate": true
+      },
+      "configStr": "{ tz: 'local', format: '24', seconds: false, showDate: true }",
+      "accent": "#1f1f22",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 1
+    },
+    {
+      "type": "worldClockBoard",
+      "name": "World Clock Board",
+      "category": "Time",
+      "desc": "A row of cities side by side, each with local time and a day-or-night dot.",
+      "config": {
+        "cities": [
+          "London",
+          "New York",
+          "Tokyo"
+        ],
+        "format": "12",
+        "style": "digital"
+      },
+      "configStr": "{ cities: ['London','New York','Tokyo'], format: '12', style: 'digital' }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 1
+    },
+    {
+      "type": "dateCard",
+      "name": "Date Card",
+      "category": "Time",
+      "desc": "A clean lock-screen stack of the day, the date and an optional week number.",
+      "config": {
+        "format": "long",
+        "showWeekNumber": true,
+        "showDay": true
+      },
+      "configStr": "{ format: 'long', showWeekNumber: true, showDay: true }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "countup",
+      "name": "Count Up",
+      "category": "Time",
+      "desc": "Days counting up since a date that mattered \u2014 sober, together, shipped.",
+      "config": {
+        "start": "2023-01-01",
+        "title": "Days together",
+        "unit": "days"
+      },
+      "configStr": "{ start: '2023-01-01', title: 'Days together', unit: 'days' }",
+      "accent": "#C2417B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "lifeProgress",
+      "name": "Life Progress",
+      "category": "Time",
+      "desc": "Quiet bars for the day, week, month, year and life already behind you.",
+      "config": {
+        "birthDate": "1995-06-01",
+        "lifeExpectancy": 85,
+        "scopes": [
+          "day",
+          "week",
+          "year",
+          "life"
+        ]
+      },
+      "configStr": "{ birthDate: '1995-06-01', lifeExpectancy: 85, scopes: ['day','week','year','life'] }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "yearProgress",
+      "name": "Year Progress",
+      "category": "Time",
+      "desc": "How much of this year has slipped by, drawn as one honest bar.",
+      "config": {
+        "scope": "year",
+        "style": "solid",
+        "showPercent": true
+      },
+      "configStr": "{ scope: 'year', style: 'solid', showPercent: true }",
+      "accent": "#E0A93B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "lifeInWeeks",
+      "name": "Life in Weeks",
+      "category": "Time",
+      "desc": "One dot per week of a life, filling in as the weeks quietly pass.",
+      "config": {
+        "birthDate": "1995-06-01",
+        "lifeExpectancy": 90,
+        "filledColor": "#18181a"
+      },
+      "configStr": "{ birthDate: '1995-06-01', lifeExpectancy: 90, filledColor: '#18181a' }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "moonPhase",
+      "name": "Moon Phase",
+      "category": "Time",
+      "desc": "Tonight's moon rendered from the sky itself, with phase and illumination.",
+      "config": {
+        "hemisphere": "north",
+        "showIllumination": true,
+        "showNextPhase": true,
+        "style": "realistic"
+      },
+      "configStr": "{ hemisphere: 'north', showIllumination: true, showNextPhase: true, style: 'realistic' }",
+      "accent": "#3a3a55",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "dayNightMap",
+      "name": "Day & Night Map",
+      "category": "Time",
+      "desc": "A world map shaded by the sun's real-time terminator \u2014 where it's dark right now.",
+      "config": {
+        "mapStyle": "minimal",
+        "showCities": true,
+        "twilightBands": false
+      },
+      "configStr": "{ mapStyle: 'minimal', showCities: true, twilightBands: false }",
+      "accent": "#243b53",
+      "pro": false,
+      "liveData": false,
+      "complexity": "high",
+      "priority": 3
+    },
+    {
+      "type": "stopwatch",
+      "name": "Stopwatch",
+      "category": "Time",
+      "desc": "A tap-to-start stopwatch with laps, for anything worth timing.",
+      "config": {
+        "showLaps": true,
+        "format": "mm:ss.cs"
+      },
+      "configStr": "{ showLaps: true, format: 'mm:ss.cs' }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "progressRing",
+      "name": "Goal Ring",
+      "category": "Productivity",
+      "desc": "A ring that fills toward any number you're chasing this week.",
+      "config": {
+        "label": "Pages read",
+        "current": 120,
+        "target": 300,
+        "showPercent": true
+      },
+      "configStr": "{ label: 'Pages read', current: 120, target: 300, showPercent: true }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "progressBar",
+      "name": "Progress Bar",
+      "category": "Productivity",
+      "desc": "A single clean bar from where you are to where you're headed.",
+      "config": {
+        "label": "Q3 goal",
+        "current": 40,
+        "target": 100,
+        "style": "solid"
+      },
+      "configStr": "{ label: 'Q3 goal', current: 40, target: 100, style: 'solid' }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "counter",
+      "name": "Tally Counter",
+      "category": "Productivity",
+      "desc": "One tap up, one tap down \u2014 a counter for reps, cups or wins.",
+      "config": {
+        "label": "Books",
+        "start": 0,
+        "step": 1,
+        "min": 0
+      },
+      "configStr": "{ label: 'Books', start: 0, step: 1, min: 0 }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "checklist",
+      "name": "Daily Checklist",
+      "category": "Productivity",
+      "desc": "A short list that ticks off and resets itself every morning.",
+      "config": {
+        "items": [
+          "Plan day",
+          "Deep work",
+          "Inbox zero"
+        ],
+        "reset": "daily",
+        "showProgress": true
+      },
+      "configStr": "{ items: ['Plan day','Deep work','Inbox zero'], reset: 'daily', showProgress: true }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 1
+    },
+    {
+      "type": "linkButton",
+      "name": "Link Button",
+      "category": "Productivity",
+      "desc": "A styled button that sends a reader anywhere with one click.",
+      "config": {
+        "label": "Book a call",
+        "url": "https://",
+        "icon": "bolt",
+        "newTab": true
+      },
+      "configStr": "{ label: 'Book a call', url: 'https://', icon: 'bolt', newTab: true }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "buttonGrid",
+      "name": "Quick Launch",
+      "category": "Productivity",
+      "desc": "A tidy grid of shortcuts that turns a page into a command center.",
+      "config": {
+        "buttons": [
+          {
+            "label": "Mail",
+            "url": "https://",
+            "icon": "mail"
+          },
+          {
+            "label": "Docs",
+            "url": "https://",
+            "icon": "book"
+          }
+        ],
+        "columns": 3
+      },
+      "configStr": "{ buttons: [{label:'Mail',url:'https://',icon:'mail'},{label:'Docs',url:'https://',icon:'book'}], columns: 3 }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "focusTimerPro",
+      "name": "Focus Timer Plus",
+      "category": "Productivity",
+      "desc": "A pomodoro with ambient sound, session counts and a task label to anchor it.",
+      "config": {
+        "work": 25,
+        "brk": 5,
+        "longBreak": 15,
+        "cycles": 4,
+        "sound": "rain",
+        "task": ""
+      },
+      "configStr": "{ work: 25, brk: 5, longBreak: 15, cycles: 4, sound: 'rain', task: '' }",
+      "accent": "#C2417B",
+      "pro": true,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "todayHeader",
+      "name": "Day in Progress",
+      "category": "Productivity",
+      "desc": "Today, this week, this month and this year, stacked as live bars.",
+      "config": {
+        "scopes": [
+          "day",
+          "week",
+          "month",
+          "year"
+        ],
+        "showPercent": true
+      },
+      "configStr": "{ scopes: ['day','week','month','year'], showPercent: true }",
+      "accent": "#E0A93B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "miniCalendar",
+      "name": "Mini Calendar",
+      "category": "Planning",
+      "desc": "A trim month view with today marked and week numbers if you want them.",
+      "config": {
+        "weekStart": "Mon",
+        "showWeekNumbers": false
+      },
+      "configStr": "{ weekStart: 'Mon', showWeekNumbers: false }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "countdownEvent",
+      "name": "Event Countdown",
+      "category": "Planning",
+      "desc": "Days, hours and minutes falling toward the date you can't wait for.",
+      "config": {
+        "target": "2026-12-25T00:00",
+        "title": "Holidays",
+        "units": [
+          "d",
+          "h",
+          "m"
+        ]
+      },
+      "configStr": "{ target: '2026-12-25T00:00', title: 'Holidays', units: ['d','h','m'] }",
+      "accent": "#C2417B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "agendaList",
+      "name": "Agenda List",
+      "category": "Planning",
+      "desc": "Your next handful of events, listed plain and read-only from a calendar feed.",
+      "config": {
+        "icalUrl": "",
+        "count": 5,
+        "range": "week"
+      },
+      "configStr": "{ icalUrl: '', count: 5, range: 'week' }",
+      "accent": "#2A6FDB",
+      "pro": true,
+      "liveData": true,
+      "complexity": "high",
+      "priority": 3
+    },
+    {
+      "type": "weekPlanner",
+      "name": "Week Planner",
+      "category": "Planning",
+      "desc": "Seven columns for the week ahead, each holding a few quick notes.",
+      "config": {
+        "weekStart": "Mon",
+        "notes": {},
+        "accentToday": true
+      },
+      "configStr": "{ weekStart: 'Mon', notes: {}, accentToday: true }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "savingsRing",
+      "name": "Savings Goal",
+      "category": "Finance",
+      "desc": "A ring filling toward a savings target, with the finish line in sight.",
+      "config": {
+        "goal": "Emergency fund",
+        "target": 10000,
+        "current": 4200,
+        "currency": "USD"
+      },
+      "configStr": "{ goal: 'Emergency fund', target: 10000, current: 4200, currency: 'USD' }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "budgetRing",
+      "name": "Budget Ring",
+      "category": "Finance",
+      "desc": "A donut that fills as you spend, turning amber then red near the limit.",
+      "config": {
+        "category": "Groceries",
+        "budget": 600,
+        "spent": 410,
+        "currency": "USD",
+        "warnAt": 80
+      },
+      "configStr": "{ category: 'Groceries', budget: 600, spent: 410, currency: 'USD', warnAt: 80 }",
+      "accent": "#E0A93B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "subscriptionCounter",
+      "name": "Subscriptions",
+      "category": "Finance",
+      "desc": "Every recurring charge totalled by month and year, with the next bill close behind.",
+      "config": {
+        "items": [
+          {
+            "name": "Netflix",
+            "amount": 15.49,
+            "cycle": "monthly"
+          }
+        ],
+        "currency": "USD",
+        "view": "monthly"
+      },
+      "configStr": "{ items: [{name:'Netflix',amount:15.49,cycle:'monthly'}], currency: 'USD', view: 'monthly' }",
+      "accent": "#C2417B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "netWorth",
+      "name": "Net Worth",
+      "category": "Finance",
+      "desc": "Assets minus liabilities, traced as a trendline you can feel grow.",
+      "config": {
+        "assets": [],
+        "liabilities": [],
+        "currency": "USD",
+        "range": "12m"
+      },
+      "configStr": "{ assets: [], liabilities: [], currency: 'USD', range: '12m' }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "debtPayoff",
+      "name": "Debt Payoff",
+      "category": "Finance",
+      "desc": "A bar per debt, ordered snowball or avalanche, with the payoff date in view.",
+      "config": {
+        "debts": [],
+        "strategy": "avalanche",
+        "extra": 100,
+        "currency": "USD"
+      },
+      "configStr": "{ debts: [], strategy: 'avalanche', extra: 100, currency: 'USD' }",
+      "accent": "#243b53",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "expenseSplitter",
+      "name": "Expense Splitter",
+      "category": "Finance",
+      "desc": "Split a bill across friends and see exactly who owes whom.",
+      "config": {
+        "total": 120,
+        "people": [
+          "A",
+          "B",
+          "C"
+        ],
+        "mode": "even",
+        "tip": 10
+      },
+      "configStr": "{ total: 120, people: ['A','B','C'], mode: 'even', tip: 10 }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "currencyConverter",
+      "name": "Currency Converter",
+      "category": "Finance",
+      "desc": "Two currencies, live rates, an instant answer.",
+      "config": {
+        "base": "USD",
+        "targets": [
+          "EUR",
+          "GBP"
+        ],
+        "amount": 100
+      },
+      "configStr": "{ base: 'USD', targets: ['EUR','GBP'], amount: 100 }",
+      "accent": "#1F8A5B",
+      "pro": true,
+      "liveData": true,
+      "complexity": "low",
+      "priority": 3
+    },
+    {
+      "type": "cryptoTicker",
+      "name": "Crypto Ticker",
+      "category": "Finance",
+      "desc": "Live prices for the coins you watch, change percent and a quiet sparkline.",
+      "config": {
+        "symbols": [
+          "BTC",
+          "ETH"
+        ],
+        "fiat": "USD",
+        "sparkline": true,
+        "refresh": 60
+      },
+      "configStr": "{ symbols: ['BTC','ETH'], fiat: 'USD', sparkline: true, refresh: 60 }",
+      "accent": "#E0A93B",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "stockTicker",
+      "name": "Stock Ticker",
+      "category": "Finance",
+      "desc": "A mini watchlist of tickers with daily change and a glance-able trend.",
+      "config": {
+        "symbols": [
+          "AAPL",
+          "MSFT"
+        ],
+        "currency": "USD",
+        "sparkline": true,
+        "refresh": 300
+      },
+      "configStr": "{ symbols: ['AAPL','MSFT'], currency: 'USD', sparkline: true, refresh: 300 }",
+      "accent": "#243b53",
+      "pro": true,
+      "liveData": true,
+      "complexity": "high",
+      "priority": 3
+    },
+    {
+      "type": "habitGrid",
+      "name": "Habit Grid",
+      "category": "Health",
+      "desc": "A month of squares per habit, each tap building the streak you're proud of.",
+      "config": {
+        "habits": [
+          "Read",
+          "Workout",
+          "Meditate"
+        ],
+        "period": "month",
+        "showStreak": true
+      },
+      "configStr": "{ habits: ['Read','Workout','Meditate'], period: 'month', showStreak: true }",
+      "accent": "#1F8A5B",
+      "pro": true,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "heatmapTracker",
+      "name": "Consistency Heatmap",
+      "category": "Health",
+      "desc": "A GitHub-style grid where color deepens the more consistent you are.",
+      "config": {
+        "label": "Practice",
+        "scheme": "green",
+        "intensity": 4,
+        "year": 2026
+      },
+      "configStr": "{ label: 'Practice', scheme: 'green', intensity: 4, year: 2026 }",
+      "accent": "#1F8A5B",
+      "pro": true,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "waterTracker",
+      "name": "Water Tracker",
+      "category": "Health",
+      "desc": "Tap to fill each glass toward today's goal \u2014 it resets at midnight.",
+      "config": {
+        "goalGlasses": 8,
+        "glassMl": 250,
+        "icon": "droplet"
+      },
+      "configStr": "{ goalGlasses: 8, glassMl: 250, icon: 'droplet' }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "moodTracker",
+      "name": "Mood Tracker",
+      "category": "Health",
+      "desc": "One emoji a day builds a calm, colorful map of your month.",
+      "config": {
+        "moods": [
+          {
+            "emoji": "\ud83d\ude00",
+            "label": "Great",
+            "color": "#1F8A5B"
+          }
+        ],
+        "view": "calendar"
+      },
+      "configStr": "{ moods: [{emoji:'\ud83d\ude00',label:'Great',color:'#1F8A5B'}], view: 'calendar' }",
+      "accent": "#C2417B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 1
+    },
+    {
+      "type": "sleepTracker",
+      "name": "Sleep Tracker",
+      "category": "Health",
+      "desc": "Log bedtime and wake, see hours slept against your goal and any debt owed.",
+      "config": {
+        "goalHours": 8,
+        "bedtime": "23:00",
+        "wakeTime": "07:00",
+        "showDebt": true
+      },
+      "configStr": "{ goalHours: 8, bedtime: '23:00', wakeTime: '07:00', showDebt: true }",
+      "accent": "#3a3a55",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "stepGoal",
+      "name": "Step Goal",
+      "category": "Health",
+      "desc": "A ring toward your daily steps, with distance and calories worked out for you.",
+      "config": {
+        "goal": 10000,
+        "current": 6400,
+        "stride": 0.75,
+        "unit": "km"
+      },
+      "configStr": "{ goal: 10000, current: 6400, stride: 0.75, unit: 'km' }",
+      "accent": "#E0A93B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "calorieRing",
+      "name": "Calorie Ring",
+      "category": "Health",
+      "desc": "A move-style ring of calories with the macros broken out beneath.",
+      "config": {
+        "goal": 2200,
+        "consumed": 1450,
+        "carbs": 160,
+        "protein": 110,
+        "fat": 55
+      },
+      "configStr": "{ goal: 2200, consumed: 1450, carbs: 160, protein: 110, fat: 55 }",
+      "accent": "#C2417B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "fastingTimer",
+      "name": "Fasting Timer",
+      "category": "Health",
+      "desc": "A ring for your fasting window \u2014 16:8, 18:6 or your own \u2014 counting down to the next meal.",
+      "config": {
+        "protocol": "16:8",
+        "fastStart": "20:00",
+        "showWindow": true
+      },
+      "configStr": "{ protocol: '16:8', fastStart: '20:00', showWindow: true }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "bmiCalculator",
+      "name": "BMI Calculator",
+      "category": "Health",
+      "desc": "Height and weight in, your number placed on a clear, kind scale.",
+      "config": {
+        "height": 175,
+        "weight": 70,
+        "units": "metric",
+        "showScale": true
+      },
+      "configStr": "{ height: 175, weight: 70, units: 'metric', showScale: true }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "breathingCircle",
+      "name": "Breathing Circle",
+      "category": "Health",
+      "desc": "A circle that grows and shrinks to pace your breath \u2014 box, 4-7-8 or your own.",
+      "config": {
+        "pattern": "box",
+        "inhale": 4,
+        "hold": 4,
+        "exhale": 4,
+        "showLabel": true
+      },
+      "configStr": "{ pattern: 'box', inhale: 4, hold: 4, exhale: 4, showLabel: true }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "workoutStreak",
+      "name": "Workout Streak",
+      "category": "Health",
+      "desc": "A flame counter for back-to-back training days, longest streak kept on record.",
+      "config": {
+        "restDaysAllowed": 1,
+        "showLongest": true,
+        "weekStart": "Mon"
+      },
+      "configStr": "{ restDaysAllowed: 1, showLongest: true, weekStart: 'Mon' }",
+      "accent": "#E0563B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "weatherForecast",
+      "name": "Weather",
+      "category": "Daily",
+      "desc": "Local conditions, highs and lows, and a clean multi-day outlook.",
+      "config": {
+        "city": "Lisbon",
+        "units": "C",
+        "days": 4,
+        "showHourly": false
+      },
+      "configStr": "{ city: 'Lisbon', units: 'C', days: 4, showHourly: false }",
+      "accent": "#2A6FDB",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "greetingBanner",
+      "name": "Greeting Banner",
+      "category": "Daily",
+      "desc": "A warm \"Good morning, name\" that shifts with the hour, with the date alongside.",
+      "config": {
+        "name": "Alex",
+        "style": "timeOfDay",
+        "tagline": "Let's make it count",
+        "showDate": true
+      },
+      "configStr": "{ name: 'Alex', style: 'timeOfDay', tagline: 'Let\\'s make it count', showDate: true }",
+      "accent": "#C2417B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "affirmation",
+      "name": "Daily Affirmation",
+      "category": "Daily",
+      "desc": "One steadying line a day, chosen by the date so it changes each morning.",
+      "config": {
+        "category": "self-care",
+        "rotation": "daily",
+        "showAuthor": false
+      },
+      "configStr": "{ category: 'self-care', rotation: 'daily', showAuthor: false }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "onThisDay",
+      "name": "On This Day",
+      "category": "Daily",
+      "desc": "A moment from history that shares today's date, refreshed every morning.",
+      "config": {
+        "category": "events",
+        "count": 1,
+        "language": "en"
+      },
+      "configStr": "{ category: 'events', count: 1, language: 'en' }",
+      "accent": "#243b53",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "githubHeatmap",
+      "name": "GitHub Heatmap",
+      "category": "Dev",
+      "desc": "Your real contribution grid, green squares and current streak, styled to fit the page.",
+      "config": {
+        "username": "octocat",
+        "scheme": "github",
+        "showStreak": true,
+        "year": 2026
+      },
+      "configStr": "{ username: 'octocat', scheme: 'github', showStreak: true, year: 2026 }",
+      "accent": "#26a641",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "githubStars",
+      "name": "GitHub Stars",
+      "category": "Dev",
+      "desc": "A live, animated star count for any repo, with forks and watchers in tow.",
+      "config": {
+        "repo": "facebook/react",
+        "showForks": true,
+        "animate": true
+      },
+      "configStr": "{ repo: 'facebook/react', showForks: true, animate: true }",
+      "accent": "#E0A93B",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "npmDownloads",
+      "name": "npm Downloads",
+      "category": "Dev",
+      "desc": "Weekly downloads for a package with a trend arrow and a small bar history.",
+      "config": {
+        "package": "react",
+        "period": "week",
+        "showChart": true
+      },
+      "configStr": "{ package: 'react', period: 'week', showChart: true }",
+      "accent": "#cb3837",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "latestRelease",
+      "name": "Latest Release",
+      "category": "Dev",
+      "desc": "The newest version of a repo or package, date and a copyable install line.",
+      "config": {
+        "source": "npm",
+        "id": "astro",
+        "showInstall": true
+      },
+      "configStr": "{ source: 'npm', id: 'astro', showInstall: true }",
+      "accent": "#18181a",
+      "pro": true,
+      "liveData": true,
+      "complexity": "low",
+      "priority": 3
+    },
+    {
+      "type": "buildStatus",
+      "name": "Build Status",
+      "category": "Dev",
+      "desc": "The latest pipeline result \u2014 passing, failing or running \u2014 with branch and timestamp.",
+      "config": {
+        "repo": "owner/repo",
+        "branch": "main",
+        "provider": "github"
+      },
+      "configStr": "{ repo: 'owner/repo', branch: 'main', provider: 'github' }",
+      "accent": "#26a641",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "uptimeMonitor",
+      "name": "Uptime Monitor",
+      "category": "Dev",
+      "desc": "Green, amber or red dots for the endpoints you watch, with rolling 24-hour uptime.",
+      "config": {
+        "endpoints": [
+          "https://"
+        ],
+        "interval": 300,
+        "timeout": 5
+      },
+      "configStr": "{ endpoints: ['https://'], interval: 300, timeout: 5 }",
+      "accent": "#1F8A5B",
+      "pro": true,
+      "liveData": true,
+      "complexity": "high",
+      "priority": 3
+    },
+    {
+      "type": "colorPalette",
+      "name": "Color Palette",
+      "category": "Dev",
+      "desc": "A row of swatches with hex values, each one click-to-copy.",
+      "config": {
+        "colors": [
+          "#2A6FDB",
+          "#1F8A5B",
+          "#E0A93B"
+        ],
+        "format": "hex",
+        "copyable": true
+      },
+      "configStr": "{ colors: ['#2A6FDB','#1F8A5B','#E0A93B'], format: 'hex', copyable: true }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "subscriberCount",
+      "name": "Subscriber Count",
+      "category": "Creator",
+      "desc": "A big live subscriber number with a flip-counter roll and your channel avatar.",
+      "config": {
+        "platform": "youtube",
+        "handle": "@channel",
+        "style": "odometer",
+        "refresh": 30
+      },
+      "configStr": "{ platform: 'youtube', handle: '@channel', style: 'odometer', refresh: 30 }",
+      "accent": "#FF0000",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "followerGoal",
+      "name": "Follower Goal",
+      "category": "Creator",
+      "desc": "A ring toward your next follower milestone, current and target side by side.",
+      "config": {
+        "platform": "youtube",
+        "handle": "@channel",
+        "goal": 100000,
+        "style": "ring"
+      },
+      "configStr": "{ platform: 'youtube', handle: '@channel', goal: 100000, style: 'ring' }",
+      "accent": "#C2417B",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "contentCalendar",
+      "name": "Content Calendar",
+      "category": "Creator",
+      "desc": "A month grid dotted with planned and published posts, color-coded by platform.",
+      "config": {
+        "entries": [],
+        "weekStart": "Mon",
+        "platformColors": {}
+      },
+      "configStr": "{ entries: [], weekStart: 'Mon', platformColors: {} }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "postingStreak",
+      "name": "Posting Streak",
+      "category": "Creator",
+      "desc": "A flame for consecutive posting days, current and longest streak kept in view.",
+      "config": {
+        "postDates": [],
+        "resetHour": 4,
+        "showLongest": true
+      },
+      "configStr": "{ postDates: [], resetHour: 4, showLongest: true }",
+      "accent": "#E0563B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "twitchStatus",
+      "name": "Twitch Status",
+      "category": "Creator",
+      "desc": "Whether a channel is live right now, with viewers and the current title.",
+      "config": {
+        "channel": "channelname",
+        "showViewers": true,
+        "offlineMessage": "Offline"
+      },
+      "configStr": "{ channel: 'channelname', showViewers: true, offlineMessage: 'Offline' }",
+      "accent": "#9146FF",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "photoFrame",
+      "name": "Photo Frame",
+      "category": "Creator",
+      "desc": "A framed photo or gentle slideshow from your own image links, Polaroid optional.",
+      "config": {
+        "images": [],
+        "frame": "polaroid",
+        "interval": 6,
+        "caption": ""
+      },
+      "configStr": "{ images: [], frame: 'polaroid', interval: 6, caption: '' }",
+      "accent": "#C2417B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "spotifyEmbed",
+      "name": "Spotify Player",
+      "category": "Creator",
+      "desc": "A playlist, album or track tucked into the page, compact or full.",
+      "config": {
+        "url": "",
+        "compact": false,
+        "theme": "dark"
+      },
+      "configStr": "{ url: '', compact: false, theme: 'dark' }",
+      "accent": "#1DB954",
+      "pro": true,
+      "liveData": true,
+      "complexity": "low",
+      "priority": 3
+    },
+    {
+      "type": "quoteCard",
+      "name": "Quote Card",
+      "category": "Fun",
+      "desc": "A rotating line of inspiration over a quiet backdrop, refreshed on demand.",
+      "config": {
+        "category": "motivation",
+        "rotation": "daily",
+        "showAuthor": true
+      },
+      "configStr": "{ category: 'motivation', rotation: 'daily', showAuthor: true }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "diceRoller",
+      "name": "Dice Roller",
+      "category": "Fun",
+      "desc": "Tap to tumble a die or a whole set, with the total tallied for you.",
+      "config": {
+        "count": 2,
+        "sides": 6,
+        "showTotal": true
+      },
+      "configStr": "{ count: 2, sides: 6, showTotal: true }",
+      "accent": "#E0563B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "magic8Ball",
+      "name": "Magic 8-Ball",
+      "category": "Fun",
+      "desc": "Ask, shake and let the floating triangle deliver its verdict.",
+      "config": {
+        "answers": [
+          "Yes",
+          "No",
+          "Ask again later"
+        ],
+        "ballColor": "#18181a"
+      },
+      "configStr": "{ answers: ['Yes','No','Ask again later'], ballColor: '#18181a' }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    },
+    {
+      "type": "asciiBanner",
+      "name": "ASCII Banner",
+      "category": "Fun",
+      "desc": "Your words rendered as big figlet-style letters in a monospace block.",
+      "config": {
+        "text": "HELLO",
+        "font": "standard",
+        "align": "left"
+      },
+      "configStr": "{ text: 'HELLO', font: 'standard', align: 'left' }",
+      "accent": "#1F8A5B",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 2
+    },
+    {
+      "type": "metronome",
+      "name": "Metronome",
+      "category": "Fun",
+      "desc": "A swinging pendulum at the BPM you set, with an optional click.",
+      "config": {
+        "bpm": 120,
+        "timeSignature": "4/4",
+        "sound": true
+      },
+      "configStr": "{ bpm: 120, timeSignature: '4/4', sound: true }",
+      "accent": "#243b53",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "gradientMesh",
+      "name": "Gradient Mesh",
+      "category": "Fun",
+      "desc": "A slow, flowing mesh of color \u2014 an ambient header that breathes.",
+      "config": {
+        "colors": [
+          "#C2417B",
+          "#2A6FDB",
+          "#1F8A5B"
+        ],
+        "speed": 1,
+        "grain": true
+      },
+      "configStr": "{ colors: ['#C2417B','#2A6FDB','#1F8A5B'], speed: 1, grain: true }",
+      "accent": "#C2417B",
+      "pro": true,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "starfield",
+      "name": "Starfield",
+      "category": "Fun",
+      "desc": "A drifting field of stars with gentle parallax, light enough to leave running.",
+      "config": {
+        "particles": 120,
+        "starColor": "#ffffff",
+        "speed": 0.5
+      },
+      "configStr": "{ particles: 120, starColor: '#ffffff', speed: 0.5 }",
+      "accent": "#243b53",
+      "pro": true,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "lavaLamp",
+      "name": "Lava Lamp",
+      "category": "Fun",
+      "desc": "Gooey blobs that rise and fall in a retro lamp, colors entirely yours.",
+      "config": {
+        "blobColor": "#E0563B",
+        "liquidColor": "#3a1a55",
+        "blobCount": 6,
+        "speed": 1
+      },
+      "configStr": "{ blobColor: '#E0563B', liquidColor: '#3a1a55', blobCount: 6, speed: 1 }",
+      "accent": "#E0563B",
+      "pro": true,
+      "liveData": false,
+      "complexity": "high",
+      "priority": 3
+    },
+    {
+      "type": "imageGallery",
+      "name": "Image Gallery",
+      "category": "Fun",
+      "desc": "An album of your images as a grid, carousel or slideshow.",
+      "config": {
+        "images": [],
+        "layout": "carousel",
+        "autoplay": true,
+        "captions": false
+      },
+      "configStr": "{ images: [], layout: 'carousel', autoplay: true, captions: false }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 2
+    },
+    {
+      "type": "visitedMap",
+      "name": "Visited Places",
+      "category": "Fun",
+      "desc": "A world map lighting up every country you've set foot in, with a running count.",
+      "config": {
+        "countries": [],
+        "highlight": "#1F8A5B",
+        "showCount": true
+      },
+      "configStr": "{ countries: [], highlight: '#1F8A5B', showCount: true }",
+      "accent": "#1F8A5B",
+      "pro": true,
+      "liveData": false,
+      "complexity": "high",
+      "priority": 3
+    },
+    {
+      "type": "ambientPlayer",
+      "name": "Ambient Player",
+      "category": "Fun",
+      "desc": "Cozy soundscapes \u2014 caf\u00e9, rain, city \u2014 looped to set the working mood.",
+      "config": {
+        "mix": [
+          "cafe",
+          "rain"
+        ],
+        "volume": 0.6,
+        "theme": "warm"
+      },
+      "configStr": "{ mix: ['cafe','rain'], volume: 0.6, theme: 'warm' }",
+      "accent": "#C2417B",
+      "pro": true,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "hitCounter",
+      "name": "Visit Counter",
+      "category": "Data",
+      "desc": "A small odometer badge tallying views, ticking up as people land.",
+      "config": {
+        "id": "my-page",
+        "style": "odometer",
+        "label": "views"
+      },
+      "configStr": "{ id: 'my-page', style: 'odometer', label: 'views' }",
+      "accent": "#18181a",
+      "pro": true,
+      "liveData": true,
+      "complexity": "med",
+      "priority": 3
+    },
+    {
+      "type": "calculator",
+      "name": "Calculator",
+      "category": "Data",
+      "desc": "A neat little calculator \u2014 basic, percentage, tip \u2014 right where you need it.",
+      "config": {
+        "mode": "basic",
+        "precision": 2
+      },
+      "configStr": "{ mode: 'basic', precision: 2 }",
+      "accent": "#18181a",
+      "pro": false,
+      "liveData": false,
+      "complexity": "med",
+      "priority": 1
+    },
+    {
+      "type": "unitConverter",
+      "name": "Unit Converter",
+      "category": "Data",
+      "desc": "Switch between length, weight, temperature and more in a tap.",
+      "config": {
+        "category": "length",
+        "from": "km",
+        "to": "mi",
+        "amount": 1
+      },
+      "configStr": "{ category: 'length', from: 'km', to: 'mi', amount: 1 }",
+      "accent": "#2A6FDB",
+      "pro": false,
+      "liveData": false,
+      "complexity": "low",
+      "priority": 1
+    }
+  ]
+}

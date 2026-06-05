@@ -1,0 +1,49 @@
+---
+import '../../styles/global.css';
+import Embed from '../../components/Embed.jsx';
+import { WIDGETS } from '../../components/NotionCrafts.jsx';
+
+// One static page per widget id — the URL Notion iframes (config is in the query).
+export function getStaticPaths() {
+  return WIDGETS.map((w) => ({ params: { widget: w.id } }));
+}
+
+const { widget } = Astro.params;
+const meta = WIDGETS.find((w) => w.id === widget);
+const title = meta ? `${meta.name} — Notion Crafts` : 'Notion Crafts widget';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <!-- Embeds shouldn't compete with the catalog pages in search -->
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Paint the right background before React hydrates, so dark embeds don't flash white -->
+    <script is:inline>
+      try {
+        var p = new URLSearchParams(location.search);
+        var t = p.get('theme') || 'light';
+        if (t === 'auto') {
+          t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-embed-theme', t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="embed-root">
+      <Embed widgetId={widget} client:only="react" />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  html, body { margin: 0; padding: 0; height: 100%; background: #ffffff; }
+  html[data-embed-theme='dark'], html[data-embed-theme='dark'] body { background: #1b1b19; }
+  #embed-root { width: 100vw; height: 100vh; overflow: hidden; }
+  #embed-root > .w { height: 100%; }
+</style>

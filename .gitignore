@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+
+# python (legacy Flask app)
+venv
+
+# misc
+.DS_Store
+*.log
+.env
+.env.*
+details.txt
