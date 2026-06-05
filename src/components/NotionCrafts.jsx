@@ -530,11 +530,11 @@ const TIMEZONES = [
 ];
 
 const FONTS = [
-  { v: 'sans', l: 'Hanken Sans', stack: "'Hanken Grotesk', system-ui, sans-serif", pro: false },
-  { v: 'serif', l: 'Newsreader', stack: "'Newsreader', Georgia, serif", pro: false },
-  { v: 'mono', l: 'Geist Mono', stack: "'Geist Mono', monospace", pro: false },
-  { v: 'rounded', l: 'Quicksand', stack: "'Quicksand', system-ui, sans-serif", pro: true },
-  { v: 'display', l: 'Fraunces', stack: "'Fraunces', Georgia, serif", pro: true },
+  { v: 'sans', l: 'Hanken Sans', stack: "'Hanken Grotesk', system-ui, sans-serif" },
+  { v: 'serif', l: 'Newsreader', stack: "'Newsreader', Georgia, serif" },
+  { v: 'mono', l: 'Geist Mono', stack: "'Geist Mono', monospace" },
+  { v: 'rounded', l: 'Quicksand', stack: "'Quicksand', system-ui, sans-serif" },
+  { v: 'display', l: 'Fraunces', stack: "'Fraunces', Georgia, serif" },
 ];
 
 const ACCENTS = ['#18181a', '#E0603A', '#2A6FDB', '#1F8A5B', '#6D4FD6', '#C2417B', '#0E9DA6', '#B07D2E'];
@@ -582,10 +582,10 @@ const ICON_SET = [
 ];
 
 const ICON_STYLES = [
-  { v: 'outline', l: 'Outline', pro: false },
-  { v: 'filled', l: 'Filled', pro: false },
-  { v: 'duotone', l: 'Duotone', pro: false },
-  { v: 'gradient', l: 'Gradient', pro: true },
+  { v: 'outline', l: 'Outline' },
+  { v: 'filled', l: 'Filled' },
+  { v: 'duotone', l: 'Duotone' },
+  { v: 'gradient', l: 'Gradient' },
 ];
 
 const PACKS = [
@@ -599,7 +599,7 @@ const PACKS = [
     id: 'founder', name: 'Founder OS', kicker: 'Run the company from one page',
     desc: 'Timezones for a distributed team, a countdown to launch, and metrics you check before coffee.',
     accent: '#18181a', icons: ['rocket', 'chart', 'globe', 'bolt', 'flag', 'wallet'],
-    widgets: ['clock', 'countdown', 'weather'], pro: true,
+    widgets: ['clock', 'countdown', 'weather'],
   },
   {
     id: 'habit', name: 'Habit System', kicker: 'Small reps, every day',
@@ -611,25 +611,8 @@ const PACKS = [
     id: 'creator', name: 'Creator Studio', kicker: 'Ship the calendar',
     desc: 'A content rhythm: a posting countdown, a month view, and a quote to break the blank page.',
     accent: '#C2417B', icons: ['camera', 'palette', 'music', 'bolt', 'star', 'gem'],
-    widgets: ['countdown', 'calendar', 'quote'], pro: true,
+    widgets: ['countdown', 'calendar', 'quote'],
   },
-];
-
-const PRO_FEATURES = [
-  'Every premium widget — Weather, Habit Streak & more',
-  'Gradient & duotone icon styles',
-  'Premium fonts (Quicksand, Fraunces)',
-  'Auto theme that follows the reader',
-  'Remove the “via Notion Crafts” caption',
-  'Unlimited favorites & curated Pro packs',
-];
-const FREE_FEATURES = [
-  'Core widgets — Clock, Countdown, Focus, Calendar',
-  'Outline, filled & duotone icons',
-  'Any hex color, light & dark themes',
-  'Three built-in fonts',
-  'Copy-to-paste embed & image URLs',
-  'Up to 12 saved favorites',
 ];
 
 /* ============================================================
@@ -11437,13 +11420,6 @@ function Segmented({ value, onChange, options }) {
   );
 }
 
-function ProBadge({ small }) {
-  return <span className="badge badge-pro" style={small ? { height: 20, fontSize: 10.5 } : {}}>
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.3L21 9l-5 4.6L17.5 21 12 17.5 6.5 21 8 13.6 3 9l6.6-0.7z" /></svg>
-    Pro
-  </span>;
-}
-
 function Toggle({ on, onChange }) {
   return (
     <button onClick={() => onChange(!on)} aria-pressed={on} style={{
@@ -11603,7 +11579,6 @@ function WidgetCard({ widget, onOpen }) {
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
           <Widget type={widget.type} config={widget.config || {}} accent={accent} fontStack="'Hanken Grotesk', sans-serif" sizeScale={0.64} theme="light" mini />
         </div>
-        {widget.pro ? <div style={{ position: 'absolute', top: 10, right: 10 }}><ProBadge /></div> : null}
       </div>
       <div className="wcard-body">
         <div className="wcard-row">
@@ -11658,27 +11633,23 @@ function WidgetGallery({ onOpen }) {
   );
 }
 
-function IconCell({ ic, accent, variant, locked, onUnlock }) {
+function IconCell({ ic, accent, variant }) {
   const [copied, copy] = useCopy();
   const url = `${SITE_ORIGIN}/i/${ic.k}?c=${accent.replace('#', '')}&s=${variant}`;
-  const onClick = () => { if (locked) return onUnlock('Gradient icons'); copy(url); };
   return (
-    <div className="icell" onClick={onClick}>
-      <LibIcon icon={ic} color={accent} variant={locked ? 'outline' : variant} size={38} />
+    <div className="icell" onClick={() => copy(url)}>
+      <LibIcon icon={ic} color={accent} variant={variant} size={38} />
       <span className="icell-label">{ic.l}</span>
-      {locked && <span style={{ position: 'absolute', top: 8, right: 8, color: 'var(--pro)' }}><LockIcon /></span>}
       <div className={'icell-copy' + (copied ? ' copied' : '')}>
         {copied
           ? <><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4.5 4.5L19 7" /></svg>Copied URL</>
-          : locked
-            ? <><LockIcon /> Unlock</>
-            : <><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>Copy image URL</>}
+          : <><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>Copy image URL</>}
       </div>
     </div>
   );
 }
 
-function IconGallery({ isPro, onUnlock }) {
+function IconGallery() {
   const [accent, setAccent] = useState('#18181a');
   const [variant, setVariant] = useState('outline');
   const [q, setQ] = useState('');
@@ -11718,8 +11689,8 @@ function IconGallery({ isPro, onUnlock }) {
             <span className="field-label">Style</span>
             <div className="seg">
               {ICON_STYLES.map(st => (
-                <button key={st.v} className={variant === st.v ? 'on' : ''} onClick={() => st.pro && !isPro ? onUnlock('Gradient icons') : setVariant(st.v)}>
-                  {st.l}{st.pro && !isPro ? <span style={{ color: 'var(--pro)', marginLeft: 2 }}><LockIcon /></span> : null}
+                <button key={st.v} className={variant === st.v ? 'on' : ''} onClick={() => setVariant(st.v)}>
+                  {st.l}
                 </button>
               ))}
             </div>
@@ -11747,7 +11718,7 @@ function IconGallery({ isPro, onUnlock }) {
         ? <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--text-3)' }}>Loading the icon library…</div>
         : <>
             <div className="igrid">
-              {list.map(ic => <IconCell key={ic.k} ic={ic} accent={accent} variant={variant} locked={variant === 'gradient' && !isPro} onUnlock={onUnlock} />)}
+              {list.map(ic => <IconCell key={ic.k} ic={ic} accent={accent} variant={variant} />)}
             </div>
             {!list.length && <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-3)' }}>No icons match “{q}”.</div>}
           </>}
@@ -11767,16 +11738,6 @@ function CtrlGroup({ label, children, right }) {
     <div className="field" style={{ paddingBottom: 20, borderBottom: '1px solid var(--border)', marginBottom: 20 }}>
       <div className="field-row"><span className="field-label">{label}</span>{right}</div>
       {children}
-    </div>
-  );
-}
-
-function LockRow({ children, locked, onUnlock }) {
-  if (!locked) return children;
-  return (
-    <div className="locked" style={{ position: 'relative' }} onClick={onUnlock}>
-      <div style={{ opacity: 0.5, pointerEvents: 'none', filter: 'saturate(0.6)' }}>{children}</div>
-      <div style={{ position: 'absolute', inset: 0, cursor: 'pointer' }} />
     </div>
   );
 }
@@ -11813,7 +11774,6 @@ function WidgetPicker({ current, onPick }) {
         style={{ height: 32, paddingLeft: 11, paddingRight: 10, fontSize: 13, maxWidth: 280 }}>
         <Icon name={widgetIcon(current)} color="var(--on-ink)" variant="filled" size={14} />
         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{current.name}</span>
-        {current.pro ? <span style={{ width: 5, height: 5, borderRadius: 99, background: 'var(--on-ink)' }} /> : null}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 1, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.18s var(--ease)' }}><path d="M6 9l6 6 6-6" /></svg>
       </button>
       <span style={{ marginLeft: 8, fontSize: 12, color: 'var(--text-3)' }}>{WIDGETS.length} widgets</span>
@@ -11841,7 +11801,6 @@ function WidgetPicker({ current, onPick }) {
                         <Icon name={widgetIcon(w)} color={on ? 'var(--on-ink)' : 'var(--text-2)'} variant={on ? 'filled' : 'outline'} size={14} />
                       </span>
                       <span style={{ fontSize: 13.5, fontWeight: on ? 600 : 500, color: 'var(--text)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{w.name}</span>
-                      {w.pro ? <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--pro)', flex: 'none' }}>PRO</span> : null}
                     </button>
                   );
                 })}
@@ -11855,7 +11814,7 @@ function WidgetPicker({ current, onPick }) {
   );
 }
 
-function Configurator({ widget, setWidget, isPro, onUnlock, favorites, toggleFav, seedAccent }) {
+function Configurator({ widget, setWidget, favorites, toggleFav, seedAccent }) {
   const [config, setConfig] = useState(widget.config || {});
   const [accent, setAccent] = useState(seedAccent || (widget.id === 'clock' ? '#18181a' : (PACKS.find(p => p.widgets.includes(widget.id))?.accent || '#2A6FDB')));
   const [fontV, setFontV] = useState('sans');
@@ -11867,11 +11826,8 @@ function Configurator({ widget, setWidget, isPro, onUnlock, favorites, toggleFav
   useEffect(() => { setConfig(widget.config || {}); }, [widget.id]);
 
   const set = (k, v) => setConfig(c => ({ ...c, [k]: v }));
-  const fontObj = FONTS.find(f => f.v === fontV) || FONTS[0];
-  const fontLocked = fontObj.pro && !isPro;
-  const effFont = fontLocked ? FONTS[0] : fontObj;
+  const effFont = FONTS.find(f => f.v === fontV) || FONTS[0];
   const effTheme = wTheme === 'auto' ? docTheme : wTheme;
-  const widgetLocked = widget.pro && !isPro;
   const s = SIZE_SCALE[sizeV];
 
   const favKey = widget.id;
@@ -11894,12 +11850,9 @@ function Configurator({ widget, setWidget, isPro, onUnlock, favorites, toggleFav
         {/* stage */}
         <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
           <DocsCanvas docTheme={docTheme} accent={accent} emoji={widgetIcon(widget)}>
-            <EmbedBlock showCaption={!(removeCap && isPro)} height={SIZE_HEIGHT[sizeV]}>
+            <EmbedBlock showCaption={!removeCap} height={SIZE_HEIGHT[sizeV]}>
               <div style={{ position: 'relative', height: '100%' }}>
                 <Widget type={widget.type} config={config} accent={accent} fontStack={effFont.stack} sizeScale={s} theme={effTheme} />
-                {widgetLocked && (
-                  <div style={{ position: 'absolute', top: 10, right: 10 }}><ProBadge /></div>
-                )}
               </div>
             </EmbedBlock>
           </DocsCanvas>
@@ -11926,7 +11879,6 @@ function Configurator({ widget, setWidget, isPro, onUnlock, favorites, toggleFav
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <h3 style={{ fontSize: 20, fontWeight: 600 }}>{widget.name}</h3>
-                {widget.pro ? <ProBadge small /> : null}
               </div>
               <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 4, maxWidth: 280 }}>{widget.desc}</div>
             </div>
@@ -11934,10 +11886,7 @@ function Configurator({ widget, setWidget, isPro, onUnlock, favorites, toggleFav
 
           {/* theme */}
           <CtrlGroup label="Theme">
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <Segmented value={wTheme === 'auto' && !isPro ? 'light' : wTheme} onChange={v => v === 'auto' && !isPro ? onUnlock('Auto theme') : setWTheme(v)} options={[{ v: 'light', l: 'Light' }, { v: 'dark', l: 'Dark' }, { v: 'auto', l: 'Auto' }]} />
-              {!isPro && <span className="lock-pill" onClick={() => onUnlock('Auto theme')} style={{ cursor: 'pointer' }}><LockIcon />Auto</span>}
-            </div>
+            <Segmented value={wTheme} onChange={setWTheme} options={[{ v: 'light', l: 'Light' }, { v: 'dark', l: 'Dark' }, { v: 'auto', l: 'Auto' }]} />
           </CtrlGroup>
 
           {/* accent */}
@@ -11948,17 +11897,13 @@ function Configurator({ widget, setWidget, isPro, onUnlock, favorites, toggleFav
           {/* font */}
           <CtrlGroup label="Font">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(86px,1fr))', gap: 7 }}>
-              {FONTS.map(f => {
-                const lk = f.pro && !isPro;
-                return (
-                  <button key={f.v} onClick={() => lk ? onUnlock('Premium fonts') : setFontV(f.v)}
-                    style={{ height: 46, borderRadius: 9, border: `1px solid ${fontV === f.v && !lk ? 'var(--ink)' : 'var(--border-strong)'}`, background: fontV === f.v && !lk ? 'var(--surface-2)' : 'var(--surface)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', padding: '0 11px', gap: 1, position: 'relative', opacity: lk ? 0.7 : 1 }}>
-                    <span style={{ fontFamily: f.stack, fontSize: 17, lineHeight: 1, color: 'var(--text)' }}>Ag</span>
-                    <span style={{ fontSize: 10.5, color: 'var(--text-3)', fontWeight: 600 }}>{f.l}</span>
-                    {lk && <span style={{ position: 'absolute', top: 6, right: 6, color: 'var(--pro)' }}><LockIcon /></span>}
-                  </button>
-                );
-              })}
+              {FONTS.map(f => (
+                <button key={f.v} onClick={() => setFontV(f.v)}
+                  style={{ height: 46, borderRadius: 9, border: `1px solid ${fontV === f.v ? 'var(--ink)' : 'var(--border-strong)'}`, background: fontV === f.v ? 'var(--surface-2)' : 'var(--surface)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', padding: '0 11px', gap: 1, position: 'relative' }}>
+                  <span style={{ fontFamily: f.stack, fontSize: 17, lineHeight: 1, color: 'var(--text)' }}>Ag</span>
+                  <span style={{ fontSize: 10.5, color: 'var(--text-3)', fontWeight: 600 }}>{f.l}</span>
+                </button>
+              ))}
             </div>
           </CtrlGroup>
 
@@ -11970,33 +11915,22 @@ function Configurator({ widget, setWidget, isPro, onUnlock, favorites, toggleFav
           {/* widget-specific */}
           <WidgetOptions widget={widget} config={config} set={set} />
 
-          {/* pro extras */}
-          <CtrlGroup label="Finishing" right={!isPro ? <span className="lock-pill" style={{ cursor: 'pointer' }} onClick={() => onUnlock('Remove caption')}><LockIcon />Pro</span> : null}>
+          {/* finishing */}
+          <CtrlGroup label="Finishing">
             <div className="field-row">
               <span style={{ fontSize: 13.5, color: 'var(--text-2)' }}>Remove “Notion Crafts” caption</span>
-              <Toggle on={removeCap && isPro} onChange={v => isPro ? setRemoveCap(v) : onUnlock('Remove caption')} />
+              <Toggle on={removeCap} onChange={setRemoveCap} />
             </div>
           </CtrlGroup>
         </div>
 
         {/* sticky copy footer */}
         <div style={{ padding: 16, borderTop: '1px solid var(--border)', background: 'var(--surface)' }}>
-          {widgetLocked ? (
-            <button className="btn btn-primary btn-lg" style={{ width: '100%', background: 'var(--pro)', color: '#fff' }} onClick={() => onUnlock(widget.name)}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.3L21 9l-5 4.6L17.5 21 12 17.5 6.5 21 8 13.6 3 9l6.6-0.7z" /></svg>
-              Unlock {widget.name} with Pro
-            </button>
-          ) : (
-            <CopyBar url={url} saved={saved} onSave={() => toggleFav(favKey)} />
-          )}
+          <CopyBar url={url} saved={saved} onSave={() => toggleFav(favKey)} />
         </div>
       </div>
     </div>
   );
-}
-
-function LockIcon() {
-  return <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V7.5a4 4 0 0 1 8 0V11" /></svg>;
 }
 
 function WidgetOptions({ widget, config: c, set }) {
@@ -13429,7 +13363,7 @@ function WidgetOptions({ widget, config: c, set }) {
 }
 
 /* ============================================================
-   PACKS · PRICING · UNLOCK MODAL
+   PACKS
    ============================================================ */
 
 function PackCard({ pack, onOpen }) {
@@ -13442,7 +13376,6 @@ function PackCard({ pack, onOpen }) {
       <div style={{ padding: '20px 22px', background: `color-mix(in srgb, ${pack.accent} 8%, var(--surface))`, borderBottom: '1px solid var(--border)', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div className="eyebrow" style={{ color: pack.accent }}>{pack.kicker}</div>
-          {pack.pro ? <ProBadge small /> : null}
         </div>
         <h3 className="serif" style={{ fontSize: 26, marginTop: 8 }}>{pack.name}</h3>
         {/* icon cluster */}
@@ -13489,9 +13422,8 @@ function PackModal({ pack, onClose, onUseWidget }) {
   const w = WIDGETS.find(x => x.id === pack.widgets[wi]);
   return (
     <Modal onClose={onClose}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+      <div style={{ marginBottom: 6 }}>
         <div className="eyebrow" style={{ color: pack.accent }}>{pack.kicker}</div>
-        {pack.pro ? <ProBadge small /> : null}
       </div>
       <h2 className="serif" style={{ fontSize: 27, marginBottom: 14 }}>{pack.name}</h2>
       <div style={{ height: 200, borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border)', marginBottom: 14 }}>
@@ -13508,104 +13440,6 @@ function PackModal({ pack, onClose, onUseWidget }) {
   );
 }
 
-function Pricing({ isPro, onUpgrade }) {
-  const [cycle, setCycle] = useState('lifetime');
-  const price = cycle === 'lifetime' ? '$29' : '$4';
-  const per = cycle === 'lifetime' ? 'one-time' : '/month';
-  return (
-    <div className="wrap" style={{ paddingTop: 44, paddingBottom: 70, maxWidth: 980 }}>
-      <div className="fadein" style={{ textAlign: 'center', marginBottom: 36 }}>
-        <div className="eyebrow">Pricing</div>
-        <h1 className="serif" style={{ fontSize: 'clamp(32px,4.6vw,50px)', marginTop: 10, marginBottom: 12 }}>Free to start. Pro when you’re ready.</h1>
-        <p style={{ color: 'var(--text-2)', fontSize: 16, maxWidth: 500, margin: '0 auto 22px' }}>No account required, ever. Pro is a one-time unlock stored on this device — upgrade only if you want the premium packs.</p>
-        <div className="seg" style={{ margin: '0 auto' }}>
-          <button className={cycle === 'monthly' ? 'on' : ''} onClick={() => setCycle('monthly')}>Monthly</button>
-          <button className={cycle === 'lifetime' ? 'on' : ''} onClick={() => setCycle('lifetime')}>Lifetime</button>
-        </div>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }} className="pricing-grid">
-        {/* FREE */}
-        <div className="card" style={{ padding: 30 }}>
-          <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-2)' }}>Free</div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, margin: '10px 0 4px' }}>
-            <span style={{ fontSize: 44, fontWeight: 700, letterSpacing: '-0.03em' }}>$0</span>
-            <span style={{ color: 'var(--text-3)', fontSize: 14 }}>forever</span>
-          </div>
-          <p style={{ color: 'var(--text-2)', fontSize: 14, marginBottom: 22 }}>The core library, fully usable.</p>
-          <button className="btn btn-ghost" style={{ width: '100%', marginBottom: 22 }} disabled>You’re on Free</button>
-          <FeatureList items={FREE_FEATURES} />
-        </div>
-
-        {/* PRO */}
-        <div className="card" style={{ padding: 30, position: 'relative', borderColor: 'var(--pro-border)', background: 'color-mix(in srgb, var(--pro) 4%, var(--surface))', boxShadow: 'var(--shadow-md)' }}>
-          <div style={{ position: 'absolute', top: 22, right: 24 }}><ProBadge /></div>
-          <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--pro)' }}>Pro</div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, margin: '10px 0 4px' }}>
-            <span style={{ fontSize: 44, fontWeight: 700, letterSpacing: '-0.03em' }}>{price}</span>
-            <span style={{ color: 'var(--text-3)', fontSize: 14 }}>{per}</span>
-          </div>
-          <p style={{ color: 'var(--text-2)', fontSize: 14, marginBottom: 22 }}>Everything in Free, plus the premium library.</p>
-          {isPro
-            ? <button className="btn" style={{ width: '100%', marginBottom: 22, background: 'var(--pro-soft)', color: 'var(--pro)', border: '1px solid var(--pro-border)' }} disabled>✓ Pro unlocked</button>
-            : <button className="btn btn-primary" style={{ width: '100%', marginBottom: 22, background: 'var(--pro)', color: '#fff' }} onClick={() => onUpgrade('Notion Crafts Pro')}>Upgrade to Pro</button>}
-          <FeatureList items={PRO_FEATURES} pro />
-        </div>
-      </div>
-      <p style={{ textAlign: 'center', color: 'var(--text-3)', fontSize: 13, marginTop: 24 }}>Prices shown for demo. Pro state is simulated and saved locally on this device.</p>
-    </div>
-  );
-}
-
-function FeatureList({ items, pro }) {
-  return (
-    <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-      {items.map((f, i) => (
-        <li key={i} style={{ display: 'flex', gap: 11, alignItems: 'flex-start', fontSize: 14, color: 'var(--text)' }}>
-          <span style={{ flex: 'none', marginTop: 1, color: pro ? 'var(--pro)' : 'var(--good)' }}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4.5 4.5L19 7" /></svg>
-          </span>
-          {f}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function UnlockModal({ reason, onClose, onConfirm }) {
-  const [loading, setLoading] = useState(false);
-  const go = () => { setLoading(true); setTimeout(() => { onConfirm(); }, 900); };
-  return (
-    <Modal onClose={onClose}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-        <span style={{ width: 38, height: 38, borderRadius: 11, background: 'var(--pro-soft)', color: 'var(--pro)', display: 'grid', placeItems: 'center', border: '1px solid var(--pro-border)' }}>
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.3L21 9l-5 4.6L17.5 21 12 17.5 6.5 21 8 13.6 3 9l6.6-0.7z" /></svg>
-        </span>
-        <div>
-          <div style={{ fontSize: 12, color: 'var(--pro)', fontWeight: 600 }}>Pro</div>
-          <h2 style={{ fontSize: 19, fontWeight: 600 }}>Unlock {reason || 'Pro'}</h2>
-        </div>
-      </div>
-      <p style={{ color: 'var(--text-2)', fontSize: 14.5, lineHeight: 1.5, marginBottom: 18 }}>
-        Get every premium widget, gradient icons, premium fonts and auto-theme — a one-time unlock, no account needed.
-      </p>
-      <div style={{ background: 'var(--surface-2)', borderRadius: 12, padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18, border: '1px solid var(--border)' }}>
-        <div>
-          <div style={{ fontWeight: 600 }}>Notion Crafts Pro</div>
-          <div style={{ fontSize: 13, color: 'var(--text-3)' }}>Lifetime · all future widgets</div>
-        </div>
-        <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em' }}>$29</div>
-      </div>
-      <button className="btn btn-primary btn-lg" style={{ width: '100%', background: 'var(--pro)', color: '#fff' }} onClick={go} disabled={loading}>
-        {loading
-          ? <span className="spin" style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#fff', borderRadius: 99, display: 'inline-block' }} />
-          : <><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V7.5a4 4 0 0 1 8 0V11" /></svg>Continue to checkout</>}
-      </button>
-      <button className="btn" style={{ width: '100%', color: 'var(--text-3)', marginTop: 8 }} onClick={onClose}>Maybe later</button>
-      <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-3)', marginTop: 12 }}>Demo checkout · unlock is simulated and saved on this device.</p>
-    </Modal>
-  );
-}
 
 /* ============================================================
    HOME / specimen catalogue title page
@@ -13773,10 +13607,10 @@ function Home({ go, onOpen }) {
         <div style={{ background: 'var(--ink)', color: 'var(--on-ink)', borderRadius: 'var(--r-lg)', padding: '60px 44px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 20 }}>Colophon</div>
           <h2 className="serif" style={{ fontSize: 'clamp(36px,5vw,64px)', lineHeight: 0.98, marginBottom: 18 }}>Your page, in your palette.</h2>
-          <p style={{ opacity: 0.66, maxWidth: 470, margin: '0 auto 30px', fontSize: 16.5, lineHeight: 1.55 }}>Start free with the core library. Upgrade to Pro when you want the premium packs.</p>
+          <p style={{ opacity: 0.66, maxWidth: 470, margin: '0 auto 30px', fontSize: 16.5, lineHeight: 1.55 }}>The whole library is free — every widget, every icon, every style. No account, no catch.</p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="btn btn-lg" style={{ background: 'var(--accent)', color: 'var(--on-accent)', transition: 'background 0.4s var(--ease)' }} onClick={() => go('widgets')}>Start building</button>
-            <button className="btn btn-lg" style={{ background: 'transparent', color: 'var(--on-ink)', border: '1px solid rgba(245,240,225,0.28)' }} onClick={() => go('pricing')}>See Pro</button>
+            <button className="btn btn-lg" style={{ background: 'transparent', color: 'var(--on-ink)', border: '1px solid rgba(245,240,225,0.28)' }} onClick={() => go('icons')}>Browse icons</button>
           </div>
         </div>
       </div>
@@ -13796,7 +13630,7 @@ function Footer({ go }) {
           <span className="mono" style={{ color: 'var(--text-3)', fontSize: 11, letterSpacing: '0.04em' }}>· Independent add-on · Not affiliated with Notion Labs</span>
         </div>
         <div className="nav-links" style={{ display: 'flex', gap: 6 }}>
-          {[['widgets', 'Widgets'], ['icons', 'Icons'], ['packs', 'Packs'], ['pricing', 'Pricing']].map(([p, l]) => (
+          {[['widgets', 'Widgets'], ['icons', 'Icons'], ['packs', 'Packs']].map(([p, l]) => (
             <a key={p} className="nav-link" onClick={() => go(p)} style={{ cursor: 'pointer' }}>{l}</a>
           ))}
         </div>
@@ -13806,7 +13640,7 @@ function Footer({ go }) {
 }
 
 /* ============================================================
-   APP SHELL — routing, theme, favorites, Pro state, modals
+   APP SHELL — routing, theme, favorites, modals
    ============================================================ */
 
 function NavLink({ active, onClick, children }) {
@@ -13815,13 +13649,11 @@ function NavLink({ active, onClick, children }) {
 
 function App() {
   const [theme, setTheme] = useLocalStorage('nc-theme', 'light');
-  const [isPro, setIsPro] = useLocalStorage('nc-pro', false);
   const [favorites, setFavorites] = useLocalStorage('nc-favs', []);
   const [page, setPage] = useState('home');
   const [widget, setWidget] = useState(WIDGETS[0]);
   const [seedAccent, setSeedAccent] = useState(null);
   const [studioKey, setStudioKey] = useState(0);
-  const [unlock, setUnlock] = useState(null);
   const [packModal, setPackModal] = useState(null);
   const [toast, setToast] = useState(null);
   const tref = useRef();
@@ -13845,10 +13677,7 @@ function App() {
     });
   };
 
-  const onUnlock = (reason) => setUnlock(reason || 'Pro');
-  const confirmUnlock = () => { setIsPro(true); setUnlock(null); showToast('Pro unlocked — enjoy the full library'); };
-
-  const navItems = [['widgets', 'Widgets'], ['icons', 'Icons'], ['packs', 'Packs'], ['pricing', 'Pricing']];
+  const navItems = [['widgets', 'Widgets'], ['icons', 'Icons'], ['packs', 'Packs']];
 
   return (
     <div className="app">
@@ -13877,28 +13706,20 @@ function App() {
         </button>
 
         <ThemeToggle theme={theme} setTheme={setTheme} />
-
-        {isPro
-          ? <span className="badge badge-pro" style={{ height: 32, padding: '0 12px', fontSize: 12.5 }}>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.3L21 9l-5 4.6L17.5 21 12 17.5 6.5 21 8 13.6 3 9l6.6-0.7z" /></svg>Pro
-            </span>
-          : <button className="btn btn-primary btn-sm" onClick={() => onUnlock('Notion Crafts Pro')}>Upgrade</button>}
       </nav>
 
       {/* PAGES */}
       <div className="page">
         {page === 'home' && <Home go={go} onOpen={openStudio} />}
         {page === 'widgets' && <WidgetGallery onOpen={openStudio} />}
-        {page === 'icons' && <IconGallery isPro={isPro} onUnlock={onUnlock} />}
+        {page === 'icons' && <IconGallery />}
         {page === 'packs' && <Setups onOpenPack={setPackModal} />}
-        {page === 'pricing' && <Pricing isPro={isPro} onUpgrade={onUnlock} />}
         {page === 'favorites' && <Favorites favorites={favorites} onOpen={openStudio} go={go} />}
-        {page === 'studio' && <Configurator key={studioKey} widget={widget} setWidget={setWidget} isPro={isPro} onUnlock={onUnlock} favorites={favorites} toggleFav={toggleFav} seedAccent={seedAccent} />}
+        {page === 'studio' && <Configurator key={studioKey} widget={widget} setWidget={setWidget} favorites={favorites} toggleFav={toggleFav} seedAccent={seedAccent} />}
       </div>
 
       {/* OVERLAYS */}
       {packModal && <PackModal pack={packModal} onClose={() => setPackModal(null)} onUseWidget={(w, accent) => { setPackModal(null); openStudio(w, accent); }} />}
-      {unlock && <UnlockModal reason={unlock} onClose={() => setUnlock(null)} onConfirm={confirmUnlock} />}
       {toast && <div className="toast"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4.5 4.5L19 7" /></svg>{toast}</div>}
     </div>
   );

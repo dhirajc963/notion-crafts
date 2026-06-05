@@ -17,8 +17,8 @@ URL and favorites live in `localStorage`.
   Habit Streak, Month Calendar. Everything ticks for real; nothing is a screenshot.
 - **36 recolorable icons** in four styles (outline / filled / duotone / gradient),
   with a global accent control that recolors the whole grid instantly.
-- **Curated packs**, **Pricing**, favorites, full light/dark, and a tasteful
-  hosted-checkout-style Pro unlock (simulated, stored on-device).
+- **Curated packs**, favorites, and full light/dark — everything in the library
+  is free, with no account and no paywall.
 
 ## Tech stack
 
@@ -87,7 +87,6 @@ directory-index resolution on its own.
 
 - Split the single-island SPA into per-widget/per-icon static *catalog* pages for long-tail SEO.
 - Wire live data into widgets client-side (e.g. Open-Meteo for Weather).
-- Real hosted checkout (Gumroad / Lemon Squeezy / Stripe Payment Links) for Pro.
 
 ---
 
