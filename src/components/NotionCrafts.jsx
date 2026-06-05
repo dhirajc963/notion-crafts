@@ -13723,7 +13723,7 @@ function App() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
               Library
             </button>
-          : <button className="brand" onClick={() => go('home')}><BrandMark /> Notion Crafts <span className="brand-tag only-desktop">Specimen</span></button>}
+          : <button className="brand" onClick={() => go('home')}><BrandMark /> Notion Crafts</button>}
 
         {page === 'studio' && <div style={{ fontSize: 14, color: 'var(--text-3)' }}>Studio<span style={{ color: 'var(--text-2)', fontWeight: 600 }}> · {widget.name}</span></div>}
 
@@ -13732,8 +13732,6 @@ function App() {
         </div>
 
         <div className="nav-spacer" />
-
-        <span className="mono only-desktop" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--text-3)', textTransform: 'uppercase' }}>Ed. MMXXVI</span>
 
         <button className="btn btn-icon btn-subtle" onClick={() => go('favorites')} title="Favorites" style={{ position: 'relative' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill={favorites.length ? 'var(--pro)' : 'none'} stroke={favorites.length ? 'var(--pro)' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20.3C12 20.3 3.8 14.7 3.8 9.2A4.4 4.4 0 0 1 12 6.8A4.4 4.4 0 0 1 20.2 9.2C20.2 14.7 12 20.3 12 20.3Z" /></svg>
