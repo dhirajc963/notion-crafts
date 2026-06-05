@@ -13408,7 +13408,7 @@ function Setups({ onOpenPack }) {
       <div className="fadein">
         <div className="eyebrow">Curated setups</div>
         <h1 className="serif" style={{ fontSize: 'clamp(32px,4.4vw,48px)', marginTop: 10, marginBottom: 10 }}>Packs to start a page in one sitting</h1>
-        <p style={{ color: 'var(--text-2)', fontSize: 16, maxWidth: 540 }}>Each pack pairs a color, a set of icons, and matching widgets — so a new page looks considered from the first block.</p>
+        <p style={{ color: 'var(--text-2)', fontSize: 16, maxWidth: 560 }}>Each pack pairs a color, a set of icons, and matching widgets. Open one to copy ready-made, pre-themed embed links and icon URLs — or fine-tune any in the Studio.</p>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(380px,1fr))', gap: 18, marginTop: 32 }}>
         {PACKS.map(p => <PackCard key={p.id} pack={p} onOpen={onOpenPack} />)}
@@ -13417,25 +13417,60 @@ function Setups({ onOpenPack }) {
   );
 }
 
+function PackIconButton({ name, accent }) {
+  const [copied, copy] = useCopy();
+  const url = `${SITE_ORIGIN}/i/${name}?c=${accent.replace('#', '')}&s=outline`;
+  return (
+    <button onClick={() => copy(url)} title="Copy icon image URL"
+      style={{ width: 46, height: 46, borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', display: 'grid', placeItems: 'center', cursor: 'pointer' }}>
+      {copied
+        ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l4.5 4.5L19 7" /></svg>
+        : <Icon name={name} color={accent} variant="outline" size={24} />}
+    </button>
+  );
+}
+
 function PackModal({ pack, onClose, onUseWidget }) {
   const [wi, setWi] = useState(0);
+  const [copied, copy] = useCopy();
   const w = WIDGETS.find(x => x.id === pack.widgets[wi]);
+  const url = buildEmbedUrl(w.id, { ...(w.config || {}), theme: 'light', accent: pack.accent.replace('#', ''), font: 'sans', size: 'm' });
   return (
     <Modal onClose={onClose}>
       <div style={{ marginBottom: 6 }}>
         <div className="eyebrow" style={{ color: pack.accent }}>{pack.kicker}</div>
       </div>
-      <h2 className="serif" style={{ fontSize: 27, marginBottom: 14 }}>{pack.name}</h2>
-      <div style={{ height: 200, borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border)', marginBottom: 14 }}>
+      <h2 className="serif" style={{ fontSize: 27, marginBottom: 8 }}>{pack.name}</h2>
+      <p style={{ color: 'var(--text-2)', fontSize: 13.5, lineHeight: 1.5, marginBottom: 16 }}>{pack.desc}</p>
+
+      {/* live preview of the selected widget, themed with the pack accent */}
+      <div style={{ height: 188, borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border)', marginBottom: 10 }}>
         <Widget type={w.type} config={w.config || {}} accent={pack.accent} fontStack="'Hanken Grotesk', sans-serif" sizeScale={0.92} theme="light" />
       </div>
-      <div style={{ display: 'flex', gap: 6, marginBottom: 18, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 6, marginBottom: 12, flexWrap: 'wrap' }}>
         {pack.widgets.map((wid, i) => { const x = WIDGETS.find(y => y.id === wid); return <button key={wid} className={'chip' + (i === wi ? ' active' : '')} onClick={() => setWi(i)}>{x?.name}</button>; })}
       </div>
+
+      {/* per-widget actions: copy the ready-to-paste embed link or fine-tune it */}
       <div style={{ display: 'flex', gap: 10 }}>
-        <button className="btn btn-primary btn-lg" style={{ flex: 1, background: pack.accent, color: onColor(pack.accent) }} onClick={() => onUseWidget(w, pack.accent)}>Customize {w.name}</button>
-        <button className="btn btn-ghost btn-lg" onClick={onClose}>Close</button>
+        <button className={'btn btn-primary' + (copied ? ' copied' : '')} style={{ flex: 1, background: pack.accent, color: onColor(pack.accent) }} onClick={() => copy(url)}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>
+          {copied ? 'Copied embed link' : `Copy ${w.name} link`}
+        </button>
+        <button className="btn btn-ghost" onClick={() => onUseWidget(w, pack.accent)}>Customize</button>
       </div>
+      <div style={{ fontSize: 12, color: 'var(--text-3)', margin: '8px 2px 20px', display: 'flex', gap: 6, alignItems: 'center' }}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+        In Notion, type <span className="mono" style={{ color: 'var(--text-2)' }}>/embed</span> and paste the link.
+      </div>
+
+      {/* matching icons — copy any as a page-icon image URL */}
+      <div className="eyebrow" style={{ marginBottom: 10 }}>Matching icons · click to copy image URL</div>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 22 }}>
+        {pack.icons.map(k => <PackIconButton key={k} name={k} accent={pack.accent} />)}
+      </div>
+
+      <button className="btn btn-ghost btn-lg" style={{ width: '100%' }} onClick={onClose}>Close</button>
     </Modal>
   );
 }
